@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+
+	<input name="order" required="true" /> <!-- argumento de entrada del subflujo< -->
+
+	<view-state id="takePayment" view="views/aceptarPago.jsp"
+		model="flowScope.paymentDetails">
+		
+		<on-entry>
+		
+			<set name="flowScope.paymentDetails" value="new com.dasilva.pizza.domain.PaymentDetails()"></set>
+			
+			<evaluate result="viewScope.paymentTypeList" expression="T(com.dasilva.pizza.domain.PaymentType).asList()"></evaluate>
+			
+		</on-entry>
+
+		<transition on="submit" to="verifyPayment"/>
+		
+		<transition on="cancel" to="cancel" />
+
+	</view-state>
+	
+	<action-state id="verifyPayment">
+	
+		<evaluate result="order.paymentDetails" expression="pizzaFlowActions.verifyPayment(flowScope.paymentDetails)"></evaluate>
+		
+		<transition to="paymentTaken"></transition>
+		
+	</action-state>
+
+	<end-state id="paymentTaken" />
+
+	<end-state id="cancel" />
+
+</flow>

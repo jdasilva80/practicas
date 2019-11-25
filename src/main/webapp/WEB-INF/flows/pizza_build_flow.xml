@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+
+	<input name="order" required="true"/> <!-- argumento de entrada del subflujo< -->
+	 
+	<view-state id="showOrder" view="views/showOrder.jsp">
+		
+		<transition on="createPizza" to="createPizza" />
+		<transition on="orderCreated" to ="orderCreated"/>
+		<transition on="cancel" to="cancel"/>
+	
+	</view-state>
+
+	<view-state id="createPizza" model="flowScope.pizza" view="views/createPizza.jsp">
+	
+		<on-entry>
+		
+			<set name="flowScope.pizza" value="new com.dasilva.pizza.domain.Pizza()"></set>
+			<evaluate result="viewScope.toppingList" expression="T(com.dasilva.pizza.domain.Topping).asList()"/>
+			
+		</on-entry>
+		
+		<transition on="addPizza" to="showOrder" >
+		
+			<evaluate expression="order.addPizza(flowScope.pizza)"></evaluate>
+			
+		</transition>
+		
+		<transition on="cancel" to="showOrder" />
+		
+	</view-state>
+
+	<end-state id="cancel"></end-state>
+	
+	<end-state id="orderCreated"></end-state>
+
+	
+
+</flow>
