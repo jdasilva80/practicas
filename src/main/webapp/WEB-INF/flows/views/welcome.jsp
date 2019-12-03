@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -8,6 +9,11 @@
 </head>
 <body>
 	<h2>Welcome!!!</h2>
+	<br>
+	<br>
+	hello <security:authentication property="principal.username" />
+	<br>
+	<br>
 	<sf:form modelAttribute="order">
 
 		${flowExecutionKey}

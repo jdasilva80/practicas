@@ -13,6 +13,7 @@
 	</view-state>
 	
 	<action-state id="lookupcustomer">
+	
 		<!-- buscar al cliente -->
 		<evaluate result ="customer" expression="pizzaFlowActions.lookUpCustomer(requestParameters.phoneNumber)"/>
 		<transition to="registrationForm" on-exception="java.lang.Exception"/>
